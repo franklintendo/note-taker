@@ -4,7 +4,7 @@ const app = express();
 const path = require("path");
 const fs = require("fs");
 
-const PORT = 4200;
+const PORT = process.env.PORT || 4200;
 
 // MIDDLEWARE 
 app.use(express.static("public"));
