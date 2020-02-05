@@ -31,7 +31,7 @@ app.post("/api/notes", (req, res) => {
     dbNotes.push(newNote);
 
     for (var i = 0; i < dbNotes.length;i++) {
-        dbNotes[i].id = i;
+        dbNotes[i].id = i+1;
     }
 
     const stringedNote = JSON.stringify(dbNotes);
