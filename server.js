@@ -30,6 +30,10 @@ app.post("/api/notes", (req, res) => {
 
     dbNotes.push(newNote);
 
+    for (var i = 0; i < dbNotes.length;i++) {
+        dbNotes[i].id = i;
+    }
+
     const stringedNote = JSON.stringify(dbNotes);
 
     fs.writeFile("./db/db.json", stringedNote, "utf8", (err, data) => {
@@ -40,7 +44,27 @@ app.post("/api/notes", (req, res) => {
 });
 
 app.delete('/api/notes/:id', function (req, res) {
-    res.send('Got a DELETE request at /user')
+    // console.log(req.params.id);
+    const idToDelete = parseInt(req.params.id);
+    let dbJSON = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+
+    console.log(dbJSON);
+    console.log(idToDelete);
+    for (var i = 0; i < dbJSON.length;i++) {
+        if (idToDelete === parseInt(dbJSON[i].id)) {
+            dbJSON.splice(i, 1);
+        }
+    }
+
+    const stringedDB = JSON.stringify(dbJSON);
+
+    fs.writeFile("./db/db.json", stringedDB, "utf8", (err, data) => {
+        if(err) throw err;
+      console.log("success");
+    });
+
+    res.json(dbJSON);
+
   })
 
 
